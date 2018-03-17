@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Details.vue should render component and match snapshot 1`] = `
+<div>
+    <div>
+        <p>No data found</p>
+    </div>
+</div>
+`;
