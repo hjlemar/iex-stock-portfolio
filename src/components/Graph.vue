@@ -7,7 +7,6 @@
 
 <script>
 import { Timeline, Graph2d } from 'vue2vis';
-import axios from 'axios';
 
 export default {
   props: ['chart'],

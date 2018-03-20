@@ -12,12 +12,8 @@ describe('Details.vue', () => {
 
   beforeEach(() => {
     store = new Vuex.Store({
-      state: {
-        date: '2018-02-01',
-      },
       getters: {
-        date: jest.fn(),
-        data: jest.fn(),
+        currentDetails: jest.fn(),
       },
     });
   });
@@ -31,9 +27,6 @@ describe('Details.vue', () => {
     const wrapper = mount(Details, {
       store,
       localVue,
-      computed: {
-        date: () => '2018-02-02',
-      },
     });
 
     expect(wrapper.html()).toBe('<div><div><p>No data found</p></div></div>');

@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { QUERY_STOCK_DQUOTE } from '../store/mutation-types';
+import { GET_DETAILS } from '@/store/modules/details/types';
 
 export default {
   data() {
@@ -37,14 +37,12 @@ export default {
   methods: {
     goToDetails() {
       this.failed = false;
-
-      this.$store.dispatch(QUERY_STOCK_DQUOTE, this.stock)
+      return this.$store.dispatch(GET_DETAILS, this.stock)
         .then(() => {
           this.stock = null;
           this.$router.push({ path: '/details' });
         })
         .catch((err) => {
-          console.log(err);
           this.message = err.response.data;
           this.failed = true;
         });

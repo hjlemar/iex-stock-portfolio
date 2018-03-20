@@ -2,7 +2,7 @@
   <div>
     <div v-if='data'>
       <app-delayed-quote-detail :delayedQuote="data"></app-delayed-quote-detail>
-      <app-graph :chart="chart"></app-graph>
+      <app-graph :chart="data.chart"></app-graph>
     </div>
     <div v-else>
       <p>No data found</p>
@@ -21,11 +21,9 @@ export default {
     appGraph: Graph,
   },
   computed: {
-    ...mapGetters([
-      'date',
-      'data',
-      'chart',
-    ]),
+    ...mapGetters({
+      data: 'currentDetails',
+    }),
   },
 };
 </script>

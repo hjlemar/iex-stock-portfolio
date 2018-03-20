@@ -38,7 +38,9 @@ export default {
     drawer: null,
   }),
   computed: {
-    ...mapGetters(['stocks']),
+    ...mapGetters({
+      stocks: 'recentList',
+    }),
   },
 };
 </script>

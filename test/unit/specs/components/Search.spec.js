@@ -1,5 +1,5 @@
 import { mount, shallow, createLocalVue } from '@vue/test-utils';
-import { QUERY_STOCK_DQUOTE } from '@/store/mutation-types';
+import { GET_DETAILS } from '@/store/modules/details/types';
 import Vuex from 'vuex';
 import Search from '@/components/Search';
 import Vuetify from 'vuetify';
@@ -39,19 +39,13 @@ describe('Search', () => {
   });
 
   describe('gotToDetails', () => {
-    let store;
-    let actions;
-
-    beforeEach(() => {
-      actions = {
-        [QUERY_STOCK_DQUOTE]: jest.fn(),
+    it('should dispatch GET_DETAILS event', () => {
+      const actions = {
+        [GET_DETAILS]: jest.fn(),
       };
-      store = new Vuex.Store({
+      const store = new Vuex.Store({
         actions,
       });
-    });
-
-    it('should dispatch QUERY_STOCK_DQUOTE event', () => {
       const push = jest.fn((x) => {
         expect(x).toMatchObject({ path: '/details' });
       });
@@ -67,11 +61,31 @@ describe('Search', () => {
         mocks,
       });
       expect(wrapper.vm.stock).toBe('O');
-      wrapper.vm.goToDetails();
-      expect(actions[QUERY_STOCK_DQUOTE]).toBeCalled();
-      // this fails oddly, even though the expect in the
-      // push function is evaluated. (console.log shows this.)
-      // expect(push).toBeCalled();
+      return wrapper.vm.goToDetails()
+        .then(() => {
+          expect(actions[GET_DETAILS]).toBeCalled();
+          expect(push).toBeCalled();
+        });
+    });
+    it('should throw an error when dispatching GET_DETAILS', () => {
+      const actions = {
+        [GET_DETAILS]: jest.fn(() => Promise.reject({ response: { data: 'FAILED' } })),
+      };
+      const store = new Vuex.Store({
+        actions,
+      });
+      const wrapper = shallow(Search, {
+        store,
+        localVue,
+        data: { stock: 'O', failed: false, message: null },
+      });
+      expect(wrapper.vm.stock).toBe('O');
+      return wrapper.vm.goToDetails()
+        .then(() => {
+          expect(actions[GET_DETAILS]).toBeCalled();
+          expect(wrapper.vm.failed).toBeTruthy();
+          expect(wrapper.vm.message).toBe('FAILED');
+        });
     });
   });
 });

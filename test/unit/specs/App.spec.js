@@ -18,6 +18,13 @@ describe('App.vue', () => {
     store = new Vuex.Store({
       state: { },
       getters,
+      modules: {
+        details: {
+          getters: {
+            recentList: jest.fn(),
+          },
+        },
+      },
     });
   });
 
