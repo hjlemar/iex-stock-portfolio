@@ -13,13 +13,13 @@
 
 <script>
 import { mapActions } from 'vuex';
-import { QUERY_STOCK_DQUOTE } from '../store/mutation-types';
+import { GET_DETAILS } from '@/store/modules/details/types';
 
 export default {
   props: ['stocks'],
   methods: {
     ...mapActions({
-      getQuote: QUERY_STOCK_DQUOTE,
+      getQuote: GET_DETAILS,
     }),
   },
 
