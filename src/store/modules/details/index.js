@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { GET_DETAILS, SAVE_DETAILS, QUERY_CHART } from './types';
+import IEX from '@/lib/iex';
 
 
 export const storeConfig = {
@@ -31,14 +32,14 @@ export const getters = {
 
 export const actions = {
   [GET_DETAILS]({ dispatch, commit }, symbol) {
-    return axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/delayed-quote`)
+    return IEX.getDelayedQuote(symbol)
       .then(({ data }) => {
         commit({ type: SAVE_DETAILS, payload: data });
         return dispatch(QUERY_CHART, symbol);
       });
   },
   [QUERY_CHART]({ commit }, symbol) {
-    return axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/chart`)
+    return IEX.getChart(symbol)
       .then(({ data }) => commit({ type: SAVE_DETAILS, payload: { symbol, chart: data } }));
   },
 };
