@@ -32,15 +32,10 @@ export const getters = {
 
 export const actions = {
   [GET_DETAILS]({ dispatch, commit }, symbol) {
-    return IEX.getDelayedQuote(symbol)
+    return IEX.getBatch(symbol)
       .then(({ data }) => {
-        commit({ type: SAVE_DETAILS, payload: data });
-        return dispatch(QUERY_CHART, symbol);
+        commit({ type: SAVE_DETAILS, payload: { symbol, ...data} });
       });
-  },
-  [QUERY_CHART]({ commit }, symbol) {
-    return IEX.getChart(symbol)
-      .then(({ data }) => commit({ type: SAVE_DETAILS, payload: { symbol, chart: data } }));
   },
 };
 

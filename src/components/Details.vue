@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if='data'>
-      <app-delayed-quote-detail :delayedQuote="data"></app-delayed-quote-detail>
+      <app-delayed-quote-detail :delayedQuote="data['delayed-quote']"></app-delayed-quote-detail>
       <app-graph :chart="data.chart"></app-graph>
     </div>
     <div v-else>

@@ -84,25 +84,14 @@ describe('store/modules/details', () => {
     it('calls GET_DETAILS', () => {
       const commit = jest.fn();
       const dispatch = jest.fn();
-      return actions[GET_DETAILS]({ dispatch, commit }, 'O')
+      const symbol = 'O';
+      return actions[GET_DETAILS]({ dispatch, commit }, symbol )
         .then(() => {
           expect(commit.mock.calls.length).toBe(1);
           expect(commit.mock.calls[0][0]).toMatchObject(
-            { type: SAVE_DETAILS, payload: undefined },
+            { type: SAVE_DETAILS, payload: { symbol } },
           );
-        })
-        .then(() => {
-          expect(dispatch).toBeCalled();
-          expect(dispatch.mock.calls[0][0]).toBe(QUERY_CHART);
-          // this is only a string... no stock
         });
-    });
-    it('calls QUERY_CHART', () => {
-      const commit = jest.fn();
-      const parameters = { type: SAVE_DETAILS, payload: { chart: undefined } };
-      return actions[QUERY_CHART]({ commit }, 'O')
-        .then(() => expect(commit).toBeCalled())
-        .then(() => expect(commit.mock.calls[0][0]).toMatchObject(parameters));
     });
   });
 });
