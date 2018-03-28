@@ -1,8 +1,7 @@
 <template>
   <v-app>
     <v-navigation-drawer fixed v-model="drawer" app>
-      <app-date-picker></app-date-picker>
-      <app-stock-list :stocks='stocks'></app-stock-list>
+      <app-stock-tabs></app-stock-tabs>
     </v-navigation-drawer>
     <v-toolbar color="indigo" dark fixed app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
@@ -22,26 +21,18 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import DatePicker from '@/components/DatePicker';
-import StockList from '@/components/StockList';
+import StockTabs from '@/components/StockTabs';
 import Home from '@/components/Home';
 
 export default {
   name: 'App',
   components: {
-    appDatePicker: DatePicker,
-    appStockList: StockList,
+    appStockTabs: StockTabs,
     appHome: Home,
   },
   data: () => ({
     drawer: null,
   }),
-  computed: {
-    ...mapGetters({
-      stocks: 'recentList',
-    }),
-  },
 };
 </script>
 
@@ -52,6 +43,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 
   color: #2c3e50;
-  margin-top: 20px;
+
 }
 </style>

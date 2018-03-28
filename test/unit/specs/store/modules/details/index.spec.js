@@ -1,7 +1,9 @@
+/* eslint no-unused-vars: 0 */
+// eslint is angry about axios, which is getting mocked
 import axios from 'axios';
 import store, { storeConfig, getters, mutations, actions } from '@/store/modules/details';
-import { SAVE_DETAILS, QUERY_CHART, GET_DETAILS } from '@/store/modules/details/types';
-
+import { SAVE_DETAILS, GET_DETAILS } from '@/store/modules/details/types';
+// this line gets hoisted above the axios.
 jest.mock('axios', () => ({
   get: jest.fn(x => Promise.resolve(x)),
 }));
@@ -83,9 +85,8 @@ describe('store/modules/details', () => {
   describe('actions', () => {
     it('calls GET_DETAILS', () => {
       const commit = jest.fn();
-      const dispatch = jest.fn();
       const symbol = 'O';
-      return actions[GET_DETAILS]({ dispatch, commit }, symbol )
+      return actions[GET_DETAILS]({ commit }, symbol)
         .then(() => {
           expect(commit.mock.calls.length).toBe(1);
           expect(commit.mock.calls[0][0]).toMatchObject(

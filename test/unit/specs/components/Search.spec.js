@@ -38,8 +38,9 @@ describe('Search', () => {
     });
   });
 
-  describe('gotToDetails', () => {
+  describe('goToDetails', () => {
     it('should dispatch GET_DETAILS event', () => {
+      const stock = 'O';
       const actions = {
         [GET_DETAILS]: jest.fn(),
       };
@@ -47,7 +48,7 @@ describe('Search', () => {
         actions,
       });
       const push = jest.fn((x) => {
-        expect(x).toMatchObject({ path: '/details' });
+        expect(x).toMatchObject({ path: `/details/${stock}` });
       });
       const mocks = {
         $router: {
@@ -57,10 +58,10 @@ describe('Search', () => {
       const wrapper = shallow(Search, {
         store,
         localVue,
-        data: { stock: 'O' },
+        data: { stock },
         mocks,
       });
-      expect(wrapper.vm.stock).toBe('O');
+      expect(wrapper.vm.stock).toBe(stock);
       return wrapper.vm.goToDetails()
         .then(() => {
           expect(actions[GET_DETAILS]).toBeCalled();

@@ -2,6 +2,7 @@
   <div>
     <div v-if='data'>
       <app-delayed-quote-detail :delayedQuote="data['delayed-quote']"></app-delayed-quote-detail>
+      <v-divider></v-divider>
       <app-graph :chart="data.chart"></app-graph>
     </div>
     <div v-else>

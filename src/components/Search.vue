@@ -7,6 +7,7 @@
           id="stock-search"
           v-model="stock"
           @keyup.enter="goToDetails()"
+          :rules="['rules']"
         ></v-text-field>
          <v-btn
           id='search-button'
@@ -39,13 +40,17 @@ export default {
       this.failed = false;
       return this.$store.dispatch(GET_DETAILS, this.stock)
         .then(() => {
+          this.$router.push({ path: `/details/${this.stock}` });
           this.stock = null;
-          this.$router.push({ path: '/details' });
         })
         .catch((err) => {
           this.message = err.response.data;
           this.failed = true;
         });
+    },
+    rules(value) {
+      const regex = /^[a-zA-Z0-9]+$/;
+      return regex.test(value) || 'Only letters and numbers allowed.';
     },
   },
 };

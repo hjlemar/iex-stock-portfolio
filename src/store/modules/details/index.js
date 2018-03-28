@@ -1,7 +1,5 @@
-import axios from 'axios';
-import { GET_DETAILS, SAVE_DETAILS, QUERY_CHART } from './types';
 import IEX from '@/lib/iex';
-
+import { GET_DETAILS, SAVE_DETAILS } from './types';
 
 export const storeConfig = {
   infos: [],
@@ -31,10 +29,10 @@ export const getters = {
 };
 
 export const actions = {
-  [GET_DETAILS]({ dispatch, commit }, symbol) {
+  [GET_DETAILS]({ commit }, symbol) {
     return IEX.getBatch(symbol)
       .then(({ data }) => {
-        commit({ type: SAVE_DETAILS, payload: { symbol, ...data} });
+        commit({ type: SAVE_DETAILS, payload: { symbol, ...data } });
       });
   },
 };

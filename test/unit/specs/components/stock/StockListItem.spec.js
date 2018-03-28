@@ -1,30 +1,21 @@
 import { shallow, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
+import StockListItem from '@/components/stock/StockListItem';
 import Vuetify from 'vuetify';
-import DatePicker from '@/components/DatePicker';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.use(Vuetify);
 
-describe('DatePicker.vue', () => {
+describe('StockListItem', () => {
   let store;
-  let getters;
 
   beforeEach(() => {
-    getters = {
-      date: jest.fn(),
-    };
-    store = new Vuex.Store({
-      state: {
-        date: '2018-02-01',
-      },
-      getters,
-    });
+    store = new Vuex.Store({ });
   });
 
   it('should render component and match snapshot', () => {
-    const wrapper = shallow(DatePicker, { store, localVue });
+    const wrapper = shallow(StockListItem, { store, localVue });
     expect(wrapper.html()).toMatchSnapshot();
   });
 });

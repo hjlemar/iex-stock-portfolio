@@ -6,13 +6,13 @@ const STOCK_URL = `${URL_ROOT}/stock`;
 
 export default {
 
-  getDelayedQuote(stock){
+  getDelayedQuote(stock) {
     return axios.get(`${STOCK_URL}/${stock}/delayed-quote`);
   },
-  getChart(stock){
+  getChart(stock) {
     return axios.get(`${STOCK_URL}/${stock}/chart`);
   },
-  getBatch(stock){
+  getBatch(stock) {
     return axios.get(`${STOCK_URL}/${stock}/batch?types=delayed-quote,logo,chart&range=1m&last=10`);
-  }
+  },
 };

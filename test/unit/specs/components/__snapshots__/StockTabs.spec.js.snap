@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StockTabs should render component and match snapshot 1`] = `
+<div>
+    <div class="tabs">
+        <div class="tabs__bar theme--dark indigo">
+            <!---->
+            <div class="tabs__wrapper">
+                <div class="tabs__container">
+                    <div class="tabs__slider-wrapper">
+                        <div class="tabs__slider accent"></div>
+                    </div>
+                    <div class="tabs__div">
+                        <a class="tabs__item">Recent</a>
+                    </div>
+                    <div class="tabs__div">
+                        <a class="tabs__item">Portfolio </a>
+                    </div>
+                </div>
+            </div>
+            <!---->
+        </div>
+        <div class="tabs__items">
+            <div class="tabs__content" id="undefined" style="display: none;">
+                <div class="card card--flat" style="height: auto;">
+                    <div class="list list--dense"></div>
+                </div>
+            </div>
+            <div class="tabs__content" id="undefined" style="display: none;">
+                <div class="card card--flat" style="height: auto;">
+                    <div class="layout row wrap"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+`;
