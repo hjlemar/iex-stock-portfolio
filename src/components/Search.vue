@@ -7,12 +7,12 @@
           id="stock-search"
           v-model="stock"
           @keyup.enter="goToDetails()"
-          :rules="['rules']"
+          :rules="[rules]"
         ></v-text-field>
          <v-btn
           id='search-button'
           @click="goToDetails()"
-          :disabled="!stock"
+          :disabled="!stock || true !== rules(stock)"
           color="primary"
           >Get Quote</v-btn>
     </v-layout>
@@ -49,7 +49,7 @@ export default {
         });
     },
     rules(value) {
-      const regex = /^[a-zA-Z0-9]+$/;
+      const regex = /^[a-zA-Z][a-zA-Z0-9]*$/;
       return regex.test(value) || 'Only letters and numbers allowed.';
     },
   },

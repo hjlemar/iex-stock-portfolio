@@ -19,7 +19,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import StockList from '@/components/StockList';
+import StockList from '@/components/stock/StockList';
 import PortfolioList from '@/components/portfolio/PortfolioList';
 
 export default {

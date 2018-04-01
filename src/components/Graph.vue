@@ -1,8 +1,6 @@
 <template>
-  <div id="app">
     <graph2d v-if="chart" ref="timeline" :items="items" :groups="groups" :options="options">
     </graph2d>
-  </div>
 </template>
 
 <script>

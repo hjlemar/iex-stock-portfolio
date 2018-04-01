@@ -1,6 +1,6 @@
 import { shallow, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
-import StockList from '@/components/StockList';
+import StockList from '@/components/stock/StockList';
 import Vuetify from 'vuetify';
 
 const localVue = createLocalVue();
@@ -14,7 +14,7 @@ describe('StockList', () => {
     store = new Vuex.Store({ });
   });
 
-  it('should render component and match snapshot', () => {
+  it('should render component and match snapshot2', () => {
     const wrapper = shallow(StockList, { store, localVue });
     expect(wrapper.html()).toMatchSnapshot();
   });

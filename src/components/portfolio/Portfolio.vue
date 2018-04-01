@@ -2,9 +2,8 @@
     <v-layout row>
       <v-flex xs8 mx-auto>
         <div>
-          <!--
+          <v-btn color="primary" dark @click.stop="dialog = true" class="mb-2">New Item</v-btn>
           <v-dialog v-model="dialog" max-width="500px">
-            <v-btn color="primary" dark slot="activator" class="mb-2">New Item</v-btn>
             <v-card>
               <v-card-title>
                 <span class="headline">Edit Stock</span>
@@ -28,7 +27,6 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-          -->
           <v-data-table
             :headers="headers"
             :items="items"
@@ -62,6 +60,11 @@
 
 <script>
 import { mapGetters } from 'vuex';
+
+const defaultItem = {
+  symbol: null,
+  shares: 0,
+};
 
 export default {
   data() {
@@ -97,12 +100,42 @@ export default {
           value: 'name',
         },
       ],
+      editedIndex: -1,
+      editedItem: { ...defaultItem },
+      dialog: false,
     };
   },
   methods: {
     ...mapGetters({
       portfolio: 'getPortfolioStocks',
     }),
+    close() {
+      this.dialog = false;
+      // without the timeout, the effect isn't bad
+      setTimeout(() => {
+        this.editedItem = { ...this.defaultItem };
+        this.editedIndex = -1;
+      }, 300);
+    },
+    save() {
+      // need to update the store. this won't work.
+      if (this.editedIndex > -1) {
+        this.items[this.editedIndex] = { ...this.editItem };
+      } else {
+        this.items.push(this.editedItem);
+      }
+      this.close();
+    },
+    editItem(item) {
+      this.editedIndex = this.items.indexOf(item);
+      this.editedItem = { ...item };
+      this.dialog = true;
+    },
+    deleteItem(item) {
+      // need to update the store. this won't work.
+      const index = this.items.indexOf(item);
+      confirm('Are you sure you want to delete this item?') && this.items.splice(index, 1);
+    },
   },
   computed: {
     items() {

@@ -1,29 +1,29 @@
 import { shallow, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
-import StockListItem from '@/components/stock/StockListItem';
+import PortfolioList from '@/components/portfolio/PortfolioList';
 import Vuetify from 'vuetify';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.use(Vuetify);
 
-describe('StockListItem', () => {
+describe('PortfolioList.vue', () => {
   let store;
-
   beforeEach(() => {
-    store = new Vuex.Store({ });
+    store = {};
   });
 
-  it('should render component and match snapshot', () => {
-    const wrapper = shallow(StockListItem, { store, localVue });
+  it('it matches its snapshot with no portfolios', () => {
+    const wrapper = shallow(PortfolioList, { store, localVue });
     expect(wrapper.html()).toMatchSnapshot();
   });
-  it('should render component and match snapshot with stock O', () => {
-    const wrapper = shallow(StockListItem, {
+
+  it('it matches its snapshot with two Portfolios', () => {
+    const wrapper = shallow(PortfolioList, {
       store,
       localVue,
       propsData: {
-        stock: 'O',
+        portfolios: ['A', 'B'],
       },
     });
     expect(wrapper.html()).toMatchSnapshot();

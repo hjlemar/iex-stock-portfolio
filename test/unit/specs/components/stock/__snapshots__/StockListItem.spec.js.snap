@@ -1,3 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`StockListItem should render component and match snapshot 1`] = `undefined`;
+
+exports[`StockListItem should render component and match snapshot with stock O 1`] = `
+<div class="test">
+    <div class="list__tile">
+        <div class="list__tile__content">
+            <div class="list__tile__title">O 10.00</div>
+        </div>
+        <div class="list__tile__action">
+            <button type="button" class="btn btn--round btn--small">
+                <div class="btn__content">Add</div>
+            </button>
+        </div>
+    </div>
+</div>
+`;
