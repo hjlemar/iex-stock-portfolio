@@ -28,6 +28,7 @@
             </v-card>
           </v-dialog>
           <v-data-table
+            v-if="items && items.length > 0"
             :headers="headers"
             :items="items"
             hide-actions
@@ -53,13 +54,17 @@
             </template>
             -->
           </v-data-table>
+          <div v-else>
+            No stocks yet!  Add one!
+          </div>
         </div>
       </v-flex>
     </v-layout>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
+import { UPDATE_STOCK, DELETE_STOCK } from '@/store/modules/portfolio/types';
 
 const defaultItem = {
   symbol: null,
@@ -100,7 +105,6 @@ export default {
           value: 'name',
         },
       ],
-      editedIndex: -1,
       editedItem: { ...defaultItem },
       dialog: false,
     };
@@ -109,32 +113,34 @@ export default {
     ...mapGetters({
       portfolio: 'getPortfolioStocks',
     }),
+    ...mapMutations({
+      updateStock: UPDATE_STOCK,
+      deleteStock: DELETE_STOCK,
+    }),
     close() {
       this.dialog = false;
       // without the timeout, the effect isn't bad
       setTimeout(() => {
         this.editedItem = { ...this.defaultItem };
-        this.editedIndex = -1;
       }, 300);
     },
     save() {
       // need to update the store. this won't work.
-      if (this.editedIndex > -1) {
-        this.items[this.editedIndex] = { ...this.editItem };
-      } else {
-        this.items.push(this.editedItem);
-      }
+      this.updateStock({
+        portfolio: this.$route.params.portfolio,
+        stock: this.editedItem,
+      });
       this.close();
     },
     editItem(item) {
-      this.editedIndex = this.items.indexOf(item);
       this.editedItem = { ...item };
       this.dialog = true;
     },
     deleteItem(item) {
-      // need to update the store. this won't work.
-      const index = this.items.indexOf(item);
-      confirm('Are you sure you want to delete this item?') && this.items.splice(index, 1);
+      this.deleteStock({
+        symbol: item.symbol,
+        portfolio: this.$route.params.portfolio,
+      });
     },
   },
   computed: {
