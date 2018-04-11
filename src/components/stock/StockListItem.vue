@@ -5,7 +5,12 @@
 
     </v-list-tile-content>
     <v-list-tile-action>
-      <v-btn ripple round small>Add</v-btn>
+      <v-btn ripple round small @click.native.stop="showPopUp">Add</v-btn>
+      <app-stock-dialog :dialog="dialog"
+        :cancel="cancel"
+        :save="save"
+        :item="item"
+      ></app-stock-dialog>
     </v-list-tile-action>
   </v-list-tile>
 </template>
@@ -13,16 +18,37 @@
 <script>
 import { mapActions } from 'vuex';
 import { GET_DETAILS } from '@/store/modules/details/types';
+import StockDialog from '@/components/stock/StockDialog';
 
 export default {
   props: ['stock'],
+  components: {
+    appStockDialog: StockDialog,
+  },
+  data() {
+    return {
+      dialog: false,
+      item: {},
+    };
+  },
   methods: {
     ...mapActions({
       getQuote: GET_DETAILS,
     }),
     showQuote() {
-      this.getQuote(this.stock)
-        .then(() => this.$router.push({ path: `/details/${this.stock}` }));
+      const stock = this.stock;
+      this.getQuote(stock)
+        .then(() => this.$router.push({ path: `/details/${stock}` }));
+    },
+    showPopUp() {
+      this.item = { symbol: this.stock, shares: 0 };
+      this.dialog = true;
+    },
+    cancel() {
+      this.dialog = false;
+    },
+    save() {
+      this.dialog = false;
     },
   },
 };

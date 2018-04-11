@@ -3,30 +3,11 @@
       <v-flex xs8 mx-auto>
         <div>
           <v-btn color="primary" dark @click.stop="dialog = true" class="mb-2">New Item</v-btn>
-          <v-dialog v-model="dialog" max-width="500px">
-            <v-card>
-              <v-card-title>
-                <span class="headline">Edit Stock</span>
-              </v-card-title>
-              <v-card-text>
-                <v-container grid-list-md>
-                  <v-layout wrap>
-                    <v-flex xs12 sm6 md4>
-                      <v-text-field label="Stock name" v-model="editedItem.symbol"></v-text-field>
-                    </v-flex>
-                    <v-flex xs12 sm6 md4>
-                      <v-text-field label="Shares" v-model="editedItem.shares"></v-text-field>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
-                <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+          <app-stock-dialog :dialog="dialog"
+            :cancel="cancel"
+            :save="save"
+            :item="editedItem"
+          ></app-stock-dialog>
           <v-data-table
             v-if="items && items.length > 0"
             :headers="headers"
@@ -48,11 +29,6 @@
                 </v-btn>
               </td>
             </template>
-            <!--
-            <template slot="no-data">
-              <v-btn color="primary" @click="initialize">Reset</v-btn>
-            </template>
-            -->
           </v-data-table>
           <div v-else>
             No stocks yet!  Add one!
@@ -65,6 +41,7 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import { UPDATE_STOCK, DELETE_STOCK } from '@/store/modules/portfolio/types';
+import StockDialog from '@/components/stock/StockDialog';
 
 const defaultItem = {
   symbol: null,
@@ -72,6 +49,9 @@ const defaultItem = {
 };
 
 export default {
+  components: {
+    appStockDialog: StockDialog,
+  },
   data() {
     return {
       headers: [
@@ -117,18 +97,18 @@ export default {
       updateStock: UPDATE_STOCK,
       deleteStock: DELETE_STOCK,
     }),
-    close() {
+    cancel() {
       this.dialog = false;
       // without the timeout, the effect isn't bad
       setTimeout(() => {
         this.editedItem = { ...this.defaultItem };
       }, 300);
     },
-    save() {
+    save(item) {
       // need to update the store. this won't work.
       this.updateStock({
         portfolio: this.$route.params.portfolio,
-        stock: this.editedItem,
+        stock: item,
       });
       this.close();
     },

@@ -8,10 +8,11 @@ exports[`StockListItem should render component and match snapshot with stock O 1
         <div class="list__tile__content">
             <div class="list__tile__title">O 10.00</div>
         </div>
-        <div class="list__tile__action">
+        <div class="list__tile__action list__tile__action--stack">
             <button type="button" class="btn btn--round btn--small">
                 <div class="btn__content">Add</div>
             </button>
+            <!---->
         </div>
     </div>
 </div>
