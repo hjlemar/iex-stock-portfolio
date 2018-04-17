@@ -2,13 +2,11 @@
   <v-list-tile class="test">
     <v-list-tile-content @click="showQuote()">
       <v-list-tile-title>{{ stock }} 10.00</v-list-tile-title>
-
     </v-list-tile-content>
     <v-list-tile-action>
-      <v-btn ripple round small @click.native.stop="showPopUp">Add</v-btn>
-      <app-stock-dialog :dialog="dialog"
+      <!-- <v-btn ripple round small @click.native.stop="showPopUp">Add</v-btn> -->
+      <app-stock-dialog
         :cancel="cancel"
-        :save="save"
         :item="item"
       ></app-stock-dialog>
     </v-list-tile-action>

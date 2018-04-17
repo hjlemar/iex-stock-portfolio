@@ -2,11 +2,11 @@
     <v-layout row>
       <v-flex xs8 mx-auto>
         <div>
-          <v-btn color="primary" dark @click.stop="dialog = true" class="mb-2">New Item</v-btn>
+
           <app-stock-dialog :dialog="dialog"
             :cancel="cancel"
-            :save="save"
             :item="editedItem"
+            :portfolio="$route.params.portfolio"
           ></app-stock-dialog>
           <v-data-table
             v-if="items && items.length > 0"
@@ -103,14 +103,6 @@ export default {
       setTimeout(() => {
         this.editedItem = { ...this.defaultItem };
       }, 300);
-    },
-    save(item) {
-      // need to update the store. this won't work.
-      this.updateStock({
-        portfolio: this.$route.params.portfolio,
-        stock: item,
-      });
-      this.close();
     },
     editItem(item) {
       this.editedItem = { ...item };
